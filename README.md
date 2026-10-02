@@ -17,7 +17,13 @@ No ads, accounts, real-money purchases, network permission or external runtime a
 
 ## Download the Android test APK
 
-Open [Actions → Build Android APK](https://github.com/dmlazid/Cozy-Friends-World/actions/workflows/android.yml), select the latest successful run, and download **Cozy-Friends-World-0.1.0** from Artifacts. Extract the ZIP and install its APK on Android 8.0 or newer. This is a debug-signed test build, not a Play Store release.
+**[Download the latest APK](https://github.com/dmlazid/Cozy-Friends-World/releases/latest/download/Cozy-Friends-World.apk)**
+
+Open the downloaded APK on your Android phone and tap **Install**. Android 8.0 or newer is required. This is a debug-signed test build.
+
+Every successful update on `main` automatically publishes an APK to [GitHub Releases](https://github.com/dmlazid/Cozy-Friends-World/releases), after the Android build, lint and gameplay checks pass. The link above always points to the newest successful published build. Older APKs remain available in the release history. Each build has an increasing Android version code.
+
+The same APK is also kept as **Cozy-Friends-World-APK** under the [build workflow's artifacts](https://github.com/dmlazid/Cozy-Friends-World/actions/workflows/android.yml).
 
 The workflow caches the test signing key for updates. Cache expiry can change that key; production releases will need a separately managed private signing key. Back up progress before uninstalling: uninstalling may remove the device save.
 

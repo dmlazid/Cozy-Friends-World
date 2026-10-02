@@ -35,11 +35,11 @@ jobs:
       - name: Build and lint Android app
         run: gradle --no-daemon assembleDebug lintDebug
       - name: Name APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk Cozy-Friends-World-0.1.0.apk
+        run: cp app/build/outputs/apk/debug/app-debug.apk Cozy-Friends-World.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: Cozy-Friends-World-0.1.0
-          path: Cozy-Friends-World-0.1.0.apk
+          name: Cozy-Friends-World-APK
+          path: Cozy-Friends-World.apk
           retention-days: 90
       - uses: actions/upload-artifact@v4
         if: always()
@@ -66,3 +66,24 @@ jobs:
         with:
           name: Gameplay-screenshots
           path: test-results/
+
+  publish:
+    name: Publish downloadable APK
+    needs: [build, gameplay]
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: cozy-apk-release-main
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: Cozy-Friends-World-APK
+          path: release-apk
+      - name: Publish this build and refresh latest download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/publish-apk.sh
