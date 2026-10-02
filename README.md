@@ -1,6 +1,16 @@
 # Cozy Friends World
 
-A small, original, offline dollhouse game for Android. Version **0.1.0** is the first playable neighborhood, with original SVG artwork and four animal friends: Mochi, Pip, Luna and Boba.
+A small, original, offline dollhouse game for Android. Version **0.2.0** adds an interactive kitchen and playroom, with original SVG artwork and four animal friends: Mochi, Pip, Luna and Boba.
+
+## New in 0.2.0 — Mix, make & play
+
+- Five locations on an illustrated neighborhood map, including Little Chef Kitchen and Wonder Playroom.
+- Open the fridge, pantry, toy chest and bookshelf to take ingredients and toys.
+- Drag, place, stack, hold, recolor and put away real objects. Friends carry held items between rooms.
+- Combine two to four ingredients in the pot, cook and serve a dish, then feed it to a friend. Ten discoverable recipes plus a custom bowl for other combinations.
+- Move and recolor added chairs, tables, rugs, flowers and toys. Choose four room palettes and daytime/evening lighting.
+- Blinking, idle movements, walking limbs, play reactions, eating and resting poses. Tap empty floor to walk; toggle Living to let other friends wander.
+- Existing 0.1.0 saves migrate automatically with coins, outfits and progress preserved.
 
 ## Play
 
@@ -43,7 +53,7 @@ The same game can be tested without an Android build:
 
 ```sh
 python3 -m http.server 8080 --directory app/src/main/assets/game
-node --test tests/model.test.mjs
+node --test tests/*.test.mjs
 ```
 
 Open `http://localhost:8080`. Use a landscape window. Keyboard users can select friends with Tab, move a focused friend using arrow keys, and activate buttons with Enter/Space.
@@ -52,7 +62,7 @@ Open `http://localhost:8080`. Use a landscape window. Keyboard users can select 
 
 ## Scope of this first version
 
-This is a 2D sandbox starter game with three locations, not a full commercial world. The school, hospital, nursery, garage, character creator, voice recording and story recording are not included yet. All characters and artwork in this repository are original; no Talking Tom characters, branding or game assets are included.
+This is a 2D sandbox starter game with five locations, not a full commercial world. The school, hospital, nursery, garage, character creator, voice recording and story recording are not included yet. All characters and artwork in this repository are original; no Talking Tom characters, branding or game assets are included.
 
 ## Technical references
 

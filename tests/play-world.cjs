@@ -1,0 +1,23 @@
+const {chromium}=require('playwright');const assert=require('node:assert/strict');const fs=require('node:fs');
+(async()=>{fs.mkdirSync('test-results',{recursive:true});const browser=await chromium.launch();const page=await browser.newPage({viewport:{width:1280,height:900}});const errors=[];page.on('pageerror',e=>errors.push(String(e)));const read=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('cozy-friends-world-v1')));const click=s=>page.locator(s).click({force:true});
+try{await page.goto('http://127.0.0.1:8080');await click('#start-button');
+ await click('#map-button');assert.equal(await page.locator('[data-world-room]').count(),5);await page.screenshot({path:'test-results/world-map.png'});await click('[data-world-room="kitchen"]');
+ assert.equal((await read()).room,'kitchen');await click('[data-container="fridge"]');await click('[data-spawn="berry"]');assert.ok((await read()).world.objects.some(o=>o.room==='kitchen'&&o.kind==='berry'));
+ // Take three real items from the counter and combine them through the accessible interaction menu.
+ for(const kind of ['flour','milk','egg']){const o=(await read()).world.objects.find(o=>o.kind===kind&&o.room==='kitchen');await click(`[data-object="${o.id}"]`);await click('#mix-object');}
+ assert.equal((await read()).world.pot.length,3);await click('#cook-button');assert.ok((await read()).world.cooking);await page.waitForTimeout(3700);await click('#cook-button');let s=await read();const dish=s.world.objects.find(o=>o.kind==='dish');assert.equal(dish.recipe,'pancakes');assert.ok(s.world.discovered.includes('pancakes'));
+ await click(`[data-object="${dish.id}"]`);await click('#hold-object');assert.equal((await read()).world.objects.find(o=>o.id===dish.id).heldBy,'mochi');assert.equal(await page.locator('#friend-mochi .held-object').count(),1);
+ await page.screenshot({path:'test-results/kitchen-cooking.png'});
+ await click('#map-button');await click('[data-world-room="playroom"]');assert.equal(await page.locator('#friend-mochi .held-object').count(),1);
+ await click(`[data-object="${dish.id}"]`);await click('#use-object');assert.ok(!(await read()).world.objects.some(o=>o.id===dish.id));
+ await click('#style-button');await click('[data-palette="rose"]');await click('#night-toggle');await click('.modal-close');assert.equal(await page.locator('#world').getAttribute('data-palette'),'rose');assert.ok(await page.locator('#world').evaluate(el=>el.classList.contains('night')));
+ const teddy=(await read()).world.objects.find(o=>o.kind==='teddy'&&o.room==='playroom');await click(`[data-object="${teddy.id}"]`);await click('[data-prop-color="#96bfdb"]');await click('.modal-close');assert.equal((await read()).world.objects.find(o=>o.id===teddy.id).color,'#96bfdb');
+ const b=await page.locator(`[data-object="${teddy.id}"]`).boundingBox();await page.mouse.move(b.x+b.width/2,b.y+b.height/2);await page.mouse.down();await page.mouse.move(b.x+b.width/2+60,b.y+b.height/2+25,{steps:8});await page.mouse.up();assert.notEqual((await read()).world.objects.find(o=>o.id===teddy.id).x,teddy.x);
+ await page.reload();assert.equal((await read()).world.styles.playroom.palette,'rose');assert.equal((await read()).world.objects.find(o=>o.id===teddy.id).color,'#96bfdb');
+ // Tap an empty floor patch; the selected friend visibly walks there and saves the destination.
+ const wr=await page.locator('#world').boundingBox();const sx=wr.width/1280,sy=wr.height/720;await page.mouse.click(wr.x+100*sx,wr.y+627*sy);await page.waitForTimeout(120);assert.ok(await page.locator('#friend-mochi').evaluate(el=>el.classList.contains('walking')));await page.waitForTimeout(2100);assert.ok((await read()).friends[0].positions.playroom.x<150);
+ await page.screenshot({path:'test-results/playroom.png'});
+ await page.setViewportSize({width:844,height:390});await click('#map-button');await click('[data-world-room="kitchen"]');await page.screenshot({path:'test-results/kitchen-phone.png'});await click('#recipes-button');await page.screenshot({path:'test-results/recipes-phone.png'});await click('.modal-close');
+ await page.setViewportSize({width:740,height:360});await click('#map-button');await page.screenshot({path:'test-results/map-small-phone.png'});await click('[data-world-room="playroom"]');await page.screenshot({path:'test-results/playroom-small-phone.png'});
+ assert.deepEqual(errors,[]);console.log('PASS: old-world play plus containers, recipes, cooking, carrying, eating, colors, night, dragging, persistence, walking and mobile layouts.');
+}catch(e){await page.screenshot({path:'test-results/play-world-failure.png'});throw e;}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

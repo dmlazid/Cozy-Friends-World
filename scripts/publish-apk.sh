@@ -24,7 +24,7 @@ Version: ${version} · Build: ${GITHUB_RUN_NUMBER}
 
 - Android build, lint and automated gameplay checks passed.
 - Offline test build for Android 8.0 and newer.
-- Four friends, three locations, dress-up, care, gardening and Bubble Meadow.
+- Five locations, interactive cooking, movable objects, room styling, living friends and Bubble Meadow.
 - Progress saves on the device. Install over the existing app when Android allows it to keep your save.
 
 [Build details](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) · [All versions](https://github.com/${GITHUB_REPOSITORY}/releases)

@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '22'
       - name: Test game rules
-        run: node --test tests/model.test.mjs
+        run: node --test tests/*.test.mjs
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools platforms;android-35 build-tools;35.0.0
@@ -61,6 +61,7 @@ jobs:
         run: |
           python3 -m http.server 8080 --directory app/src/main/assets/game &
           node tests/browser.cjs
+          node tests/play-world.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

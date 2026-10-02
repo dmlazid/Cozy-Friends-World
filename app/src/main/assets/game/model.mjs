@@ -1,18 +1,19 @@
+import {freshWorld,restoreWorld} from './play-model.mjs';
 export const FRIENDS = [
  {id:'mochi',name:'Mochi',kind:'bunny',color:'#f9dfd2',inner:'#eda6af',shirt:'#ae9be2',bio:'A little daydreamer who loves strawberry cake.'},
  {id:'pip',name:'Pip',kind:'panda',color:'#df9570',inner:'#995d50',shirt:'#91bba0',bio:'A curious gardener with a very fluffy tail.'},
  {id:'luna',name:'Luna',kind:'cat',color:'#d5cfee',inner:'#aa98ce',shirt:'#efb273',bio:'A tiny explorer who puts stars on everything.'},
  {id:'boba',name:'Boba',kind:'bear',color:'#bd9278',inner:'#dfb6a0',shirt:'#93b7d5',bio:'A gentle baker, always ready for a big hug.'}
 ];
-export const ROOMS = ['home','cafe','garden'];
+export const ROOMS = ['home','cafe','garden','kitchen','playroom'];
 export const OUTFITS = ['#ae9be2','#91bba0','#efb273','#93b7d5','#ed96b0','#f1cb76'];
 export const HATS = ['none','bow','flower','crown'];
 export const ACTIONS = {feed:{hunger:28,fun:3},sleep:{energy:32},wash:{clean:35,fun:4},play:{fun:28,energy:-5},hug:{fun:12}};
 export const QUESTS = [{id:'feed',label:'Share a tasty snack',icon:'snack'},{id:'wash',label:'Make a splash',icon:'water'},{id:'play',label:'Play together',icon:'heart'},{id:'sleep',label:'Take a cozy nap',icon:'moon'},{id:'garden',label:'Grow a little happiness',icon:'leaf'},{id:'bubbles',label:'Catch 8 bubbles',icon:'bubbles'}];
-export function freshState(){return {version:1,coins:30,xp:0,selected:'mochi',room:'home',muted:false,started:false,decor:[],questDone:[],questsClaimed:false,plant:{stage:0,readyAt:0},friends:FRIENDS.map((f,i)=>({id:f.id,hunger:68,energy:75,clean:62,fun:72,outfit:f.shirt,hat:'none',emotion:'happy',positions:Object.fromEntries(ROOMS.map(r=>[r,{x:355+i*195,y:565+(i%2)*18}]))}))};}
+export function freshState(){return {world:freshWorld(),version:1,coins:30,xp:0,selected:'mochi',room:'home',muted:false,started:false,decor:[],questDone:[],questsClaimed:false,plant:{stage:0,readyAt:0},friends:FRIENDS.map((f,i)=>({id:f.id,hunger:68,energy:75,clean:62,fun:72,outfit:f.shirt,hat:'none',emotion:'happy',positions:Object.fromEntries(ROOMS.map(r=>[r,{x:355+i*195,y:565+(i%2)*18}]))}))};}
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function restore(raw){
- const s=freshState();try{const p=JSON.parse(raw);if(!p||p.version!==1)return s;
+ const s=freshState();try{const p=JSON.parse(raw);if(!p||p.version!==1)return s;s.world=restoreWorld(p.world);
  for(const k of ['coins','xp'])if(Number.isFinite(p[k]))s[k]=clamp(Math.floor(p[k]),0,999999);
  if(ROOMS.includes(p.room))s.room=p.room;if(FRIENDS.some(f=>f.id===p.selected))s.selected=p.selected;
  s.muted=p.muted===true;s.started=p.started===true;s.decor=Array.isArray(p.decor)?[...new Set(p.decor.filter(v=>['rug','lights','flowers'].includes(v)))]:[];
