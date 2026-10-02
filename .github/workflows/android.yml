@@ -19,7 +19,9 @@ jobs:
         with:
           node-version: '22'
       - name: Test game rules
-        run: node --test tests/*.test.mjs
+        run: |
+          for file in app/src/main/assets/game/*.mjs; do node --check "$file"; done
+          node --test tests/*.test.mjs
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools platforms;android-35 build-tools;35.0.0

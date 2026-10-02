@@ -48,4 +48,5 @@ export function kitchenStation(w){let b=r(611,449,290,99,'#dfb18d',14)+r(598,434
  const items=w.cooking?['water','star','water']:w.pot;items.forEach((k,i)=>{b+=`<g transform="translate(${692+i*28} 345) scale(.6)">${inner(propArt(k))}</g>`;});
  if(w.cooking)b+='<g class="steam"><path d="M711 345q-20-25 0-46m35 38q-20-25 0-46m35 54q-20-25 0-46" stroke="#fff9" stroke-width="8" fill="none"/></g>';
  return svg(b,'0 0 1280 720');
+}
 export function mapArt(){return svg(`<rect width="1000" height="500" rx="35" fill="#d8ead4" stroke="none"/><path d="M-30 396Q120 236 302 370T620 337 1030 390" stroke="#f9eccb" stroke-width="65" fill="none"/><path d="M196 88q120 182 293 265m18-290q-39 183 64 245m295-128L691 365" stroke="#f9eccb" stroke-width="40" fill="none"/>${e(895,420,107,59,'#aad4d9')}${Array.from({length:14},(_,i)=>{const x=(i*227+60)%970,y=(i*59+37)%420;return `<g transform="translate(${x} ${y}) scale(.6)">${inner(icon('garden'))}</g>`;}).join('')}`,'0 0 1000 500');}

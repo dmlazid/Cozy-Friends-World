@@ -5,7 +5,7 @@ const fs=require('node:fs');
  fs.mkdirSync('test-results',{recursive:true});
  const browser=await chromium.launch({headless:true});
  const page=await browser.newPage({viewport:{width:1280,height:900}});
- const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ const errors=[];page.on('pageerror',e=>{errors.push(String(e));console.error('GAME ERROR:',e.stack||e);});
  const read=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('cozy-friends-world-v1')));
  try{
  await page.goto('http://127.0.0.1:8080');await page.locator('#start-button').click();
