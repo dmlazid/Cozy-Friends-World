@@ -26,7 +26,7 @@ const fs=require('node:fs');
  await page.locator('#shop-button').click();await page.locator('[data-buy="rug"]').click();await page.locator('.modal-close').click();assert.ok((await read()).decor.includes('rug'));
  await page.reload();assert.equal((await read()).friends[1].outfit,'#ed96b0');assert.equal((await read()).room,'garden');
  await page.locator('#minigame-button').click();await page.locator('#bubble-start').click();const deadline=Date.now()+22000;let pops=0;
- while(Date.now()<deadline){if(await page.locator('#back-world').count())break;const bubble=page.locator('.bubble').first();if(await bubble.count()){try{await bubble.click({timeout:700});pops++;}catch{}}await page.waitForTimeout(110);}
+ while(Date.now()<deadline){if(await page.locator('#back-world').count())break;const bubble=page.locator('.bubble').first();if(await bubble.count()){try{await bubble.click({timeout:700,force:true});pops++;}catch{}}await page.waitForTimeout(110);}
  assert.ok(pops>=8);assert.ok((await read()).questDone.includes('bubbles'));await page.locator('#back-world').click();
  await page.locator('[data-room="home"]').click();
  for(const [name,width,height]of [['phone',844,390],['small-phone',740,360],['portrait',390,844]]){
