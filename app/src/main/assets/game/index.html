@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f5eadf"><title>Cozy Friends World</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body>
+<main id="game" aria-label="Cozy Friends World">
+ <div id="world-wrap"><div id="world">
+  <div id="scenery" aria-hidden="true"></div><div id="decorations" aria-hidden="true"></div><div id="zones"></div><div id="characters"></div><div id="particles" aria-hidden="true"></div>
+  <header><button class="brand" id="map-button" aria-label="Open world map"><span class="brand-icon" data-icon="home"></span><span><small>COZY FRIENDS</small><strong id="place-title">Honeybell Home</strong></span><span class="chevron">⌄</span></button><div class="header-right"><button class="coin-pill" id="shop-button" aria-label="Open decoration shop"><span data-icon="coin"></span><b id="coins">30</b><span>+</span></button><button class="round" id="sound-button" aria-label="Mute sound" data-icon="sound"></button><button class="round" id="help-button" aria-label="How to play" data-icon="help"></button></div></header>
+  <div class="room-note"><span id="room-tag">A LITTLE PLACE TO BELONG</span><span id="room-tip">Drag a friend. Make a little story.</span></div>
+  <button id="quest-button" class="quest-pill"><span data-icon="star"></span><span>Little wishes <b id="quest-count">0/6</b></span></button>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="friend-label"></div>
+ </div></div>
+ <footer><div class="friend-picker" id="friend-picker" aria-label="Choose a friend"></div><div class="care-panel"><div class="care-heading"><strong id="selected-name">Mochi</strong><span id="friend-status">Feeling lovely</span><button id="dress-button" aria-label="Dress up selected friend" data-icon="shirt"></button></div><div class="needs" id="needs"></div></div><div class="tray"><div class="tray-title"><span>POCKET OF HAPPY</span><button id="emotions-button" aria-label="Choose expression" data-icon="smile"></button></div><div id="items"></div></div><button class="play-button" id="minigame-button"><span data-icon="bubbles"></span><span>Bubble<br><strong>meadow</strong></span></button></footer>
+ <nav id="room-nav" aria-label="Locations"></nav>
+</main>
+<div id="modal-layer" class="hidden"><section id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section></div><div id="drag-ghost" aria-hidden="true"></div><script type="module" src="game.mjs"></script></body></html>
