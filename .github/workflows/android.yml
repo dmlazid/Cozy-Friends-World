@@ -29,11 +29,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Keep test APK signing stable between builds
-        uses: actions/cache@v4
-        with:
-          path: ~/.android/debug.keystore
-          key: cozy-friends-debug-signing-v1
+      - name: Install permanent test signing key
+        run: bash scripts/install-test-signing-key.sh
       - name: Build and lint Android app
         run: gradle --no-daemon assembleDebug lintDebug
       - name: Name APK
