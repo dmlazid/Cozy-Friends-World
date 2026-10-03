@@ -1,0 +1,25 @@
+/* v0.3.0 Living Friends: tiny personality moments layered over the normal game controls. */
+.character.gesture-wave .arm-right{animation:life-wave .24s ease-in-out 5 alternate!important}.character.gesture-wave .head{animation:life-nod .65s ease-in-out 2!important}
+.character.gesture-hop>svg{animation:life-hop .42s ease-in-out 3!important}.character.gesture-hop .arm-left,.character.gesture-hop .arm-right{animation:life-cheer .38s ease-in-out 3 alternate!important}
+.character.gesture-look .head{animation:life-look 1.25s ease-in-out!important}.character.gesture-look .eyes{animation:none!important;transform:scaleY(1)}
+.character.gesture-dance>svg{animation:life-dance .38s ease-in-out 4!important}.character.gesture-dance .arm-left{animation:life-cheer .28s ease-in-out 5 alternate!important}.character.gesture-dance .arm-right{animation:life-cheer .28s ease-in-out 5 alternate-reverse!important}
+.character.gesture-stretch .arm-left{animation:life-stretch-left .7s ease-in-out 2 alternate!important}.character.gesture-stretch .arm-right{animation:life-stretch-right .7s ease-in-out 2 alternate!important}.character.gesture-stretch .head{animation:life-nod .7s ease-in-out 2!important}
+.character.gesture-proud>svg{animation:life-proud .7s ease-in-out 2!important}.character.gesture-proud .head{animation:life-look .8s ease-in-out 2!important}
+.character.gesture-chat>svg{animation:life-chat .42s ease-in-out 4!important}.character.gesture-chat .arm-right{animation:life-wave .3s ease-in-out 4 alternate!important}
+.character.gesture-tap>svg{animation:life-tap .32s ease-out 2!important}
+.life-bubble{position:absolute;left:50%;bottom:196px;transform:translateX(-50%);z-index:15;min-width:58px;max-width:125px;padding:7px 10px;border-radius:14px;background:#fffaf2f3;border:2px solid #fff;box-shadow:0 4px 0 #745d5515;font-size:12px;font-weight:700;color:#8b6c7e;text-align:center;white-space:nowrap;pointer-events:none;animation:life-bubble-in 1.5s ease forwards}
+.step-puff{position:absolute;z-index:2;width:20px;height:12px;border-radius:50%;font-size:20px;line-height:10px;color:#fff8e5aa;text-shadow:0 1px 0 #9b826033;pointer-events:none;animation:step-puff .62s ease-out forwards}
+@keyframes life-wave{from{transform:rotate(-46deg)}to{transform:rotate(10deg)}}
+@keyframes life-nod{0%,100%{transform:rotate(0)}50%{transform:rotate(7deg)}}
+@keyframes life-hop{0%,100%{transform:translateY(0) scale(1)}45%{transform:translateY(-15px) scale(1.02,.98)}}
+@keyframes life-cheer{from{transform:rotate(-48deg)}to{transform:rotate(28deg)}}
+@keyframes life-look{0%,100%{transform:rotate(0)}28%{transform:rotate(-7deg)}68%{transform:rotate(7deg)}}
+@keyframes life-dance{0%,100%{transform:translateY(0) rotate(-2deg)}25%{transform:translateY(-7px) rotate(5deg)}75%{transform:translateY(-5px) rotate(-6deg)}}
+@keyframes life-stretch-left{from{transform:rotate(-8deg)}to{transform:rotate(-72deg)}}
+@keyframes life-stretch-right{from{transform:rotate(5deg)}to{transform:rotate(72deg)}}
+@keyframes life-proud{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.035)}}
+@keyframes life-chat{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(3px) rotate(2deg)}}
+@keyframes life-tap{0%,100%{transform:scale(1)}45%{transform:scale(1.055,.96)}}
+@keyframes life-bubble-in{0%{opacity:0;transform:translate(-50%,8px) scale(.85)}14%,78%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-8px) scale(.95)}}
+@keyframes step-puff{0%{opacity:.7;transform:scale(.45)}100%{opacity:0;transform:translateY(9px) scale(1.35)}}
+@media(prefers-reduced-motion:reduce){.life-bubble,.step-puff{display:none!important}.character[class*="gesture-"] *,.character[class*="gesture-"]{animation:none!important}}
