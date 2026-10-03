@@ -20,7 +20,9 @@ export const TOYS={teddy:'Teddy bear',ball:'Bouncy ball',book:'Story book',pillo
 const rooms=['home','cafe','garden','kitchen','playroom'];
 export function newObject(world,kind,room,x,y,extra={}){
  if(!rooms.includes(room)||world.objects.filter(o=>o.room===room&&!o.heldBy).length>=28)return null;
- const o={id:'thing-'+world.nextId++,kind,room,x,y,color:PROP_COLORS[world.nextId%PROP_COLORS.length],heldBy:null,...extra};world.objects.push(o);return o;
+ let px=x,py=y;const occupied=(xx,yy)=>world.objects.some(o=>o.room===room&&!o.heldBy&&Math.abs(o.x-xx)<58&&Math.abs(o.y-yy)<55);
+ if(occupied(px,py)){py=Math.min(620,y+170);for(let i=0;i<7&&occupied(px,py);i++)px=Math.max(70,Math.min(1210,x+(i+1)*82));}
+ const o={id:'thing-'+world.nextId++,kind,room,x:px,y:py,color:PROP_COLORS[world.nextId%PROP_COLORS.length],heldBy:null,...extra};world.objects.push(o);return o;
 }
 export function freshWorld(){const w={living:true,nextId:1,objects:[],styles:Object.fromEntries(rooms.map(r=>[r,{palette:'sunshine',night:false}])),containers:{fridge:false,pantry:false,toybox:false,bookshelf:false},pot:[],cooking:null,discovered:[],edit:false};
  for(const [r,k,x,y]of [['home','teddy',190,542],['home','book',281,585],['home','pillow',473,535],['cafe','mug',192,463],['cafe','flower',1125,440],['garden','ball',799,592],['garden','flower',312,593],['kitchen','mug',1072,535],['kitchen','flour',440,330],['kitchen','milk',512,330],['kitchen','egg',580,330],['playroom','teddy',282,540],['playroom','ball',890,538],['playroom','block',1063,560],['playroom','book',467,585],['playroom','chair',1135,597]])newObject(w,k,r,x,y);
